@@ -114,3 +114,4 @@ GitHub.sublime-settings
 node_modules/
 /compiled/
 
+/bower_components/
