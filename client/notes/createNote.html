@@ -1,0 +1,16 @@
+<div id='container' ng-controller="newNoteCtrl">
+  <h2>Enter Password</h2>
+    <form ng-submit="data.sendData(data)">
+      <div>
+        <label for="name">Note Name:</label>
+        <input id="noteName" type="text" name="noteName" ng-model='data.noteName'>
+      </div>
+      <div>
+        <label for="noteData">Note Data:</label>
+        <input id="noteData" type="text" name="noteData" ng-model='data.noteData'>
+      </div>
+      <div>
+        <button type="submit" value="Enter">ENTER</button>
+      </div>
+    </form>
+</div>

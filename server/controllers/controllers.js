@@ -3,18 +3,32 @@ var models = require('../models/models.js');
 
 module.exports = {
   notes : {
-    get: function(req, res) {
-      models.notes.get(1, function(err, results) {
-        console.log('GET NOTES CONTROLLER RESULTS: ', results);
-        res.json(results);
-      })
+    getAll: function(req, res) {
+      models.notes.getAll(/*UserID->*/[1], function(err, results) {
+        console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+        res.send(results);
+      });
     },
     post: function(req, res) {
-      var params = [req.body.name, userid, req.body.data];
+      var params = [req.body.noteName, 1/*req.userid*/, req.body.noteData];
       models.notes.post(params, function(err, results) {
-        if(err) { console.log("NOTE POSTING ERROR: ", err) }
+        if(err) { console.log("NOTE POSTING ERROR: ", err); }
           res.sendStatus(201);
-      })
+      });
+    },
+    delete: function(req, res) {
+      var noteName = req.noteName;
+      models.notes.delete(noteName, function(err, results) {
+        if(err) { console.log('ERROR DELETING NOTE: ', err); }
+        res.send(results);
+      });
+    },
+    edit: function(req, res) {
+      var params = [req.data, req.noteId];
+      models.notes.edit(params, function(err, results) {
+        if(err) { console.log('ERROR EDITING NOTE: ', err); }
+        res.send(results);
+      });
     }
   }
 };
