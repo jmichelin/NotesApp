@@ -4,7 +4,7 @@ var models = require('../models/models.js');
 module.exports = {
   notes : {
     getAll: function(req, res) {
-      models.notes.getAll(/*UserID->*/[1], function(err, results) {
+      models.notes.getAll(/*UserID->*/1, function(err, results) {
         console.log('GET NOTES: CONTROLLER RESULTS: ', results);
         res.send(results);
       });
