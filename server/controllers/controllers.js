@@ -9,8 +9,14 @@ module.exports = {
         res.send(results);
       });
     },
+    getPublic:function(req, res) {
+      models.notes.getAll(/*UserID->*/[1], function(err, results) {
+        console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+        res.send(results);
+      }); 
+    },
     post: function(req, res) {
-      var params = [req.body.noteName, 1/*req.userid*/, req.body.noteData];
+      var params = [req.body.noteName, 1/*req.userid*/, peq.body.isPrivate, req.body.noteData];
       models.notes.post(params, function(err, results) {
         if(err) { console.log("NOTE POSTING ERROR: ", err); }
           res.sendStatus(201);

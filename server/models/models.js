@@ -10,8 +10,15 @@ module.exports = {
         callback(err, results);
       });
     },
+    getPublic: function(userId, callback) {
+      var queryString = 'SELECT * FROM Notes WHERE id_Users = ? AND isPrivate = "false";';
+      db.query(queryString, userId, function(err, results) {
+        console.log("GETTING ALL PUBLIC NOTES: ", results);
+        callback(err, results);
+      });
+    },
     post: function(params, callback) {
-      var queryString = 'INSERT INTO Notes(name, id_Users, data) VALUES (?, ?, ?);';
+      var queryString = 'INSERT INTO Notes(name, id_Users, isPrivate, data) VALUES (?, ?, ?, ?);';
       db.query(queryString, params, function(err, results) {
         console.log('TRYING TO POST NOTE');
         callback(err, results);
