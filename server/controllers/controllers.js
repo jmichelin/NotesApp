@@ -3,18 +3,49 @@ var models = require('../models/models.js');
 
 module.exports = {
   notes : {
-    get: function(req, res) {
-      models.notes.get(1, function(err, results) {
-        console.log('GET NOTES CONTROLLER RESULTS: ', results);
-        res.json(results);
-      })
+    getAll: function(req, res) {
+      models.notes.getAll(/*UserID->*/[1], function(err, results) {
+        console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+        res.send(results);
+      });
+    },
+    getPublic:function(req, res) {
+      var userId;
+      models.users.getId(req.body.username, function(err, results) {
+        userId = results[0].id;
+        models.notes.getPublic(userId, function(err, results) {
+          console.log('USER ID: ', userId);
+          console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+          res.send(results);
+        }); 
+      });
+      
+      // models.notes.getPublic(userId, function(err, results) {
+      //   console.log('USER ID: ', userId);
+      //   console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+      //   res.send(results);
+      // }); 
     },
     post: function(req, res) {
-      var params = [req.body.name, userid, req.body.data];
+      var params = [req.body.noteName, 1/*req.userid*/, req.body.isPrivate, req.body.noteData];
       models.notes.post(params, function(err, results) {
-        if(err) { console.log("NOTE POSTING ERROR: ", err) }
+        if(err) { console.log("NOTE POSTING ERROR: ", err); }
           res.sendStatus(201);
-      })
+      });
+    },
+    delete: function(req, res) {
+      var noteName = req.noteName;
+      models.notes.delete(noteName, function(err, results) {
+        if(err) { console.log('ERROR DELETING NOTE: ', err); }
+        res.send(results);
+      });
+    },
+    edit: function(req, res) {
+      var params = [req.data, req.noteId];
+      models.notes.edit(params, function(err, results) {
+        if(err) { console.log('ERROR EDITING NOTE: ', err); }
+        res.send(results);
+      });
     }
   }
 };
