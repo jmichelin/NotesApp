@@ -11,8 +11,8 @@ module.exports = {
       });
     },
     getPublic: function(userId, callback) {
-      var queryString = 'SELECT * FROM Notes WHERE id_Users = ? AND isPrivate = "false";';
-      db.query(queryString, userId, function(err, results) {
+      var queryString = "SELECT * FROM Notes WHERE id_Users = ? AND isPrivate = 'false';";
+      db.query(queryString,userId, function(err, results) {
         console.log("GETTING ALL PUBLIC NOTES: ", results);
         callback(err, results);
       });
@@ -35,6 +35,15 @@ module.exports = {
       var queryString = 'UPDATE Notes SET data = ? WHERE id = ?;';
       db.query(queryString, params, function(err, results) {
         console.log('TRYING TO UPDATE NOTE: ');
+        callback(err, results);
+      })
+    }
+  },
+  users: {
+    getId: function(username, callback) {
+      var queryString = 'SELECT id FROM Users WHERE username = ?;';
+      db.query(queryString,username,function(err, results) {
+        console.log('GETTING USER ' + username + "'s ID", results);
         callback(err, results);
       })
     }

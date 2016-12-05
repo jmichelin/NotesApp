@@ -8,5 +8,6 @@ router.get('/', function(req, res) {
 
 router.get('/api/notes', controllers.notes.getAll);
 router.post('/api/createNote', controllers.notes.post);
+router.post('/api/searchNoteByUser', controllers.notes.getPublic);
 
 module.exports = router;
