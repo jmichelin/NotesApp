@@ -1,13 +1,25 @@
 var db = require('../../db');
 var models = require('../models/models.js');
+var jwt = require('jwt-simple');
 
 module.exports = {
   notes : {
     getAll: function(req, res) {
-      models.notes.getAll(/*UserID->*/1, function(err, results) {
-        console.log('GET NOTES: CONTROLLER RESULTS: ', results);
-        res.send(results);
-      });
+      var token = req.headers['x-access-token'];
+      if (!token) {
+        res.send('No token');
+      } else {
+        var user = jwt.decode(token, 'secret');
+        console.log("TOKEN USERNAME: ", user);
+        models.users.getId(user, function(err, resultUser) {
+          var id= resultUser[0].id;
+          models.notes.getAll(/*UserID->*/id, function(err, results) {
+            console.log('GET NOTES: CONTROLLER RESULTS: ', results);
+            res.send(results);
+        });
+        })
+        
+      }
     },
     getPublic:function(req, res) {
       var userId;
@@ -19,19 +31,22 @@ module.exports = {
           res.send(results);
         }); 
       });
-      
-      // models.notes.getPublic(userId, function(err, results) {
-      //   console.log('USER ID: ', userId);
-      //   console.log('GET NOTES: CONTROLLER RESULTS: ', results);
-      //   res.send(results);
-      // }); 
     },
-    post: function(req, res) {
-      var params = [req.body.noteName, 1/*req.userid*/, req.body.isPrivate, req.body.noteData];
-      models.notes.post(params, function(err, results) {
-        if(err) { console.log("NOTE POSTING ERROR: ", err); }
-          res.sendStatus(201);
-      });
+    post: function(req, res) {var token = req.headers['x-access-token'];
+      if (!token) {
+        next(new Error('No token'));
+      } else {
+        var user = jwt.decode(token, 'secret');
+        console.log("TOKEN USERNAME: ", user);
+        models.users.getId(user, function(err, resultUser) {
+          var id = resultUser[0].id;
+          var params = [req.body.noteName, id, req.body.isPrivate, req.body.noteData];
+          models.notes.post(params, function(err, results) {
+            if(err) { console.log("NOTE POSTING ERROR: ", err); }
+              res.sendStatus(201);
+          });
+        })
+      }
     },
     delete: function(req, res) {
       var noteName = req.noteName;
@@ -47,5 +62,42 @@ module.exports = {
         res.send(results);
       });
     }
+  },
+  users: {
+    signin: function(req, res) {
+     // console.log('USER SIGNIN CONTROLLER REQ: ', req);
+     var user = req.body.username;
+     var passwd = req.body.password
+      var params = [user, passwd];
+      models.users.getUser(params, function(err, results) {
+        if(err) { console.log('ERROR USER SIGNIN CONTROLLER: ', err); }
+        console.log('USERS CONTROLLER RESULTS: ', results);
+        if(results.length === 0) {
+          res.send('Wrong Username or Password');
+        } else {
+          var token = jwt.encode(user, 'secret');
+          console.log("TOKEN:  ", token)
+          res.send({token: token});
+        }
+      })
+    } 
+
+        // ----------- FOR AUTHENTICATION -----------
+    // comparePassword: function(attemptedPassword) {
+    //   bcrypt.compare(attemptedPassword, this.get('password'), function(err, isMatch) {
+    //     if(err) { 
+    //       console.log("ERROR COMPARING PASSWD: ", err)
+    //     } else {
+    //       return isMatch;
+    //     }
+    //   });
+    // },
+    // hashPassword: function() {
+    //   var cipher = Promise.promisify(bcrypt.hash);
+    //   return cipher(this.get('password'), null, null).bind(this)
+    //   .then(function(hash) {
+    //     this.set('password', hash);
+    //   });
+    // }
   }
 };

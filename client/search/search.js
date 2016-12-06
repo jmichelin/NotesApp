@@ -9,7 +9,8 @@ angular.module('notes-app.search', [])
         },
         data: data
     }).then(function(response) {
-        console.log('RESPONSE: ', response);
+        console.log('RESPONSE: ', response.data);
+        data.notes = response.data;
         data.username = '';
         return response;
     })

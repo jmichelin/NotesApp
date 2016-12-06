@@ -4,7 +4,7 @@ angular.module('notes-app.notes', [])
       mothod: "GET",
       url: "api/notes"
     }).then(function success(response) {
-      console.log('RESPONSE: ', response);
+      console.log('RESPONSE: ', response.data);
       $scope.data = response.data
     });
   })

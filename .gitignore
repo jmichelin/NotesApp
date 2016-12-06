@@ -19,6 +19,8 @@ gen### JetBrains template
 .idea/dynamic.xml
 .idea/uiDesigner.xml
 
+/db/git-info
+
 # Gradle:
 .idea/gradle.xml
 .idea/libraries
