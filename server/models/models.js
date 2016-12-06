@@ -45,7 +45,15 @@ module.exports = {
       db.query(queryString,username,function(err, results) {
         console.log('GETTING USER ' + username + "'s ID", results);
         callback(err, results);
-      })
-    }
+      });
+    },
+    getUser: function(params, callback) {
+      console.log("WHERE HERE IN THE FINDONE MODELS.JS!!!")
+      var queryString = 'SELECT * FROM Users WHERE username = ? AND password = ?;';
+      db.query(queryString,params, function(err,results) {
+        console.log('GETTING USER: ', params[0]);
+        callback(err, results);
+      });
+    } 
   }
 };
