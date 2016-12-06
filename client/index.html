@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html ng-app='notes-app'>
 <head>
-    <meta charset="utf-8" />
+    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/node_modules/angular-route/angular-route.js"></script>
+    <script src="/node_modules/ng-quill/src/ng-quill.min.js"></script>
+    <script src="/node_modules/quill/quill.js"></script>
+    <script src="search/search.js"></script>
+    <script src="editor/editor.js"></script>
+    <script src="notes/notes.js"></script>
+    <script src="app/app.js"></script>
+
+    <meta charset="utf-8"/>
     <title>Notes App</title>
-    <link rel="stylesheet" type="text/css" href="styles/style.css" />
+    <link rel="stylesheet" type="text/css" href="styles/style.css"/>
 </head>
 <body>
-  <h1>Greenfield Notes App</h1>
-  <div class="navigation">
+<h1>Greenfield Notes App</h1>
+<div class="navigation">
     <ul>
-      <li><a href="#viewNotes" class="index">View Notes</a></li>
-      <li><a href="#createNote" class="crete">Create Note</a></li>
-      <li><a href="#searchUser" class="index">Search Notes</a></li>
+        <li><a href="#viewNotes" class="index">View Notes</a></li>
+        <li><a href="#createNote" class="crete">Create Note</a></li>
+        <li><a href="#editor">Edit</a></li>
+        <li><a href="#searchUser" class="index">Search Notes</a></li>
     </ul>
-  </div>
+</div>
 
-  <div ng-view></div>
-  <script src="lib/angular/angular.js"></script>
-  <script src="lib/angular-route/angular-route.js"></script>
-  <script src="search/search.js"></script>
-  <script src="notes/notes.js"></script>
-  <script src="app/app.js"></script>
-  </body>
+<div ng-view></div>
+
+</body>
 </html>

@@ -14,6 +14,8 @@ app.use(morgan('dev'));
 app.use(parser.json());
 app.use(router);
 app.use(express.static(path.join(__dirname, '/../client')));
+app.use('/node_modules', express.static(path.join(__dirname, '/../node_modules')));
+
 
 if(!module.parent) {
   app.listen(app.get('port'));

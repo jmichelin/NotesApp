@@ -12,6 +12,8 @@
     "lint": "eslint ./"
   },
   "dependencies": {
+    "angular": "^1.5.9",
+    "angular-route": "^1.5.9",
     "bcrypt-nodejs": "0.0.3",
     "bluebird": "^3.4.6",
     "body-parser": "^1.4.3",
@@ -21,7 +23,9 @@
     "knex": "^0.12.6",
     "morgan": "^1.1.1",
     "mysql": "^2.12.0",
+    "ng-quill": "^2.0.2",
     "pg": "^6.1.0",
+    "quill": "^1.1.5",
     "request": "^2.36.0"
   },
   "devDependencies": {
