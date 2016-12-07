@@ -10,6 +10,9 @@
         <input id="noteData" type="text" name="noteData" ng-model='data.noteData'>
       </div>
       <div>
+        <ng-quill-editor ng-model="data.noteData"></ng-quill-editor>
+      </div>
+      <div>
           <label>
             <input type="radio" ng-model="data.isPrivate" value="false">
             Public

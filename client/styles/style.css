@@ -15,6 +15,10 @@ h1 {
     margin-bottom: 10px;
 }
 
+ng-quill-editor.ng-invalid .ql-container {
+    border: 1px dashed red;
+}
+
 [ng-quill-editor] {
     display: block;
 }
