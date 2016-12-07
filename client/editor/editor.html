@@ -1,21 +1,16 @@
 <div ng-controller="viewNotesCtrl" class="editor">
     <div>
-
         <h3>Edit Note</h3>
-        <div>
-        <div ng-click="data.clicked(note.data)" ng-repeat="note in data">
-            <tr>
-                <td class='name'>{{note.name}}</td>
-            </tr>
+        <h4>Select a note from the list to begin editing</h4>
+        <div class="col-md-4">
+            <div ng-click="data.clicked(note.data)" ng-repeat="note in data">
+                    <span class='name'>{{note.name}}</span>
+            </div>
         </div>
+        <div class="col-md-6 quill-wrapper form-element">
+            <ng-quill-editor ng-model="contents" on-editor-created="editorCreated(editor)" editor.setHTML(contents) toolbar="true" link-tooltip="true"
+                toolbar-entries="font size bold list bullet italic underline strike align color background link image" editor-required="true">
+            </ng-quill-editor>
         </div>
-        <!--<pre><code>{{data[0].name}}</code></pre>-->
-        <!--<pre><code>{{data[0].data}}</code></pre>-->
-        <ng-quill-editor ng-model="title" on-editor-created="editorCreated(editor)" editor.setHTML(editorData) toolbar="true" link-tooltip="true"
-                         toolbar-entries="font size bold list bullet italic underline strike align color background link image"
-                         editor-required="true"
-                         on-content-changed="contentChanged(editor, html, text)">
-        </ng-quill-editor>
-
     </div>
 </div>

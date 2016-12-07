@@ -1,16 +1,23 @@
 angular.module('notes-app.notes', [])
-  .factory('viewNoteFactory', function($scope, $http) {
-    return function getNotes() {
-      $http({
+  .factory('viewNoteFactory', function($http) {
+    var getNotes = function() {
+      return $http({
         method: "GET",
         url: "api/notes"
       }).then(function success(response) {
-        console.log('RESPONSE: ', response);
-        $scope.data = response.data
+        console.log('RESPONSE: ', response.data[0].data);
+        // $scope.data = response.data
+        return response.data;
       });
     }
+    return {
+      getNotes: getNotes
+    }
   })
-    .controller('viewNotesCtrl', function($scope, $http) {
+    .controller('viewNotesCtrl', function($scope, $http, viewNoteFactory) {
+      viewNoteFactory.getNotes().then(function success(data) {
+        $scope.contents = data;
+      })
       function clicked(data) {
         console.log("CLICKED DATA", data)
         $scope.editorData = data;

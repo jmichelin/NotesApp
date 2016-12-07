@@ -1,37 +1,39 @@
 var editorModule = angular.module('notes-app.editor', ['ngQuill', 'notes-app.notes']);
+
 editorModule.config(['ngQuillConfigProvider', function (ngQuillConfigProvider) {
   ngQuillConfigProvider.set();
 }]);
+
 editorModule
-  .factory('editorFactory', function($http) {
+  .factory('editorFactory', function ($http) {
     return function postData(data) {
-      $http({
-        method:'POST',
-        url:"api/edit",
+      return $http({
+        method: 'POST',
+        url: "api/edit",
         headers: {
           'Content-Type': 'application/json'
         },
         data: data
-      }).then(function(response) {
-        console.log('RESPONSE: ', response);
+      }).then(function (response) {
+        console.log('LINE 18 RESPONSE: ', response);
         data.noteData = '';
         return response;
       })
     }
   })
-  .controller('editorCtrl', function($scope, $timeout, editorFactory) {
-
+  .controller('editorCtrl', function ($scope, $timeout, editorFactory) {
     $scope.title = 'Initialized quill editor...';
-    $scope.body =
-    $scope.readOnly = false;
+    $scope.body = $scope.readOnly = false;
+
     $timeout(function () {
       $scope.title += ' awsome!!!'
     }, 2000);
+    
     $scope.editorCreated = function (editor) {
       console.log(editor);
     };
+    
     $scope.contentChanged = function (editor, html, text) {
-      console.log('editor: ', editor, 'html: ', html, 'text:', text);
+      console.log('LINE 37:::   ', 'editor: ', editor, 'html: ', html, 'text:', text);
     };
-  }
-);
+  });
